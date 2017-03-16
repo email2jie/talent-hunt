@@ -8,7 +8,7 @@ import RepoList from './components/repos/repoList.js'
 class App extends Component {
   constructor(props){
     super(props);
-    this.state = {value: '', repos: [], owner: {}, filter: ''};
+    this.state = {value: '', repos: [], owner: {}};
 
     this.onChange = this.onChange.bind(this);
     this.onBlur = this.onBlur.bind(this);
@@ -37,7 +37,7 @@ class App extends Component {
     if (this.state.repos.length > 0){
       repoList = <div>
         <img src={this.state.owner.avatar_url} alt='avatar' />
-        <RepoList key={this.state.value} repoList={this.state.repos} />;
+        <RepoList key={this.state.value} repoList={this.state.repos} />
       </div>
       
     }else{
