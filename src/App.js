@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-import RepoList from './components/repos/repoList.js' 
+import RepoList from './components/repos/repoList.js';
+import StarChart from './components/stargazers/starchart.js';
 
 
 class App extends Component {
   constructor(props){
     super(props);
-    this.state = {value: '', repos: [], owner: {}};
+    this.state = {test: 'test', value: '', repos: [], owner: {}};
 
     this.onChange = this.onChange.bind(this);
     this.onBlur = this.onBlur.bind(this);
@@ -38,6 +39,7 @@ class App extends Component {
       repoList = <div>
         <img src={this.state.owner.avatar_url} alt='avatar' />
         <RepoList key={this.state.value} repoList={this.state.repos} />
+        <StarChart repoList={this.state.repos}/>
       </div>
       
     }else{

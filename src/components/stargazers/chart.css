@@ -1,0 +1,13 @@
+.chart {
+  padding-top: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 500px;
+}
+
+.chartView {
+  width: 1000px;
+  height: 400px;
+}
+
