@@ -4,6 +4,7 @@ import './App.css';
 
 import RepoList from './components/repos/repoList.js';
 import StarChart from './components/stargazers/starchart.js';
+import LanguageData from './components/language/language-data.js';
 
 
 class App extends Component {
@@ -35,6 +36,7 @@ class App extends Component {
     let repoList = null;
     let avatar = null;
     let chart = null;
+    let language = null;
     if (this.state.repos.length > 0){
       repoList = <div>
         <RepoList className='pure-u-1-2' key={this.state.value} repoList={this.state.repos} />
@@ -42,6 +44,7 @@ class App extends Component {
 
       avatar = <img className='pure-u-1-2' src={this.state.owner.avatar_url} alt='avatar' />
       chart = <StarChart className='pure-u-1' repoList={this.state.repos}/>
+      language = <LanguageData repoList={this.state.repos} />
       }else{
       }
 return (
@@ -58,6 +61,8 @@ return (
       </form>
 
       {avatar}
+      {language}
+
     </div>
 
     <div className='pure-u-1-2'>
