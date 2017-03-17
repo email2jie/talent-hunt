@@ -10,18 +10,15 @@ import LanguageData from './components/language/language-data.js';
 class App extends Component {
   constructor(props){
     super(props);
-    this.state = {value: '', repos: [], owner: {}};
+    this.state = {repos: [], owner: {}};
     this.onChangeFunc('email2jie');
 
   }
 
-  onChange = (event) => {
-    this.setState({value: event.target.value});
-  }
-
   onHandleSubmit = (event) => {
     event.preventDefault();
-    this.onChangeFunc(this.state.value);
+    var input = document.getElementById('name').value;
+    this.onChangeFunc(input);
   }
 
   onChangeFunc = (user) => {
@@ -56,7 +53,7 @@ return (
     <div className="pure-u-1-2">
       <form className='pure-form pure-u-1' onSubmit={this.onHandleSubmit}>
         <label for='name'>
-          <input id='name' type='text' placeholder="Search Github User" value={this.state.value} onChange={this.onChange} />
+          <input id='name' type='text' placeholder="Search Github User" />
         </label>
       </form>
 

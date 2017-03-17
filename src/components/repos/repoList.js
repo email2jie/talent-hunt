@@ -39,7 +39,7 @@ class RepoList extends Component {
 
       <form className='pure-form' onSubmit={this.onHandleSubmit}>
         <label>
-          <input id='name' type='text' placeholder='Filter Repo' value={this.state.filter} onChange={this.handleFilterChange} />
+          <input id='filter' type='text' placeholder='Filter Repo' value={this.state.filter} onChange={this.handleFilterChange} />
         </label>
       </form>
         <ul>
