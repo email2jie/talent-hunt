@@ -6,8 +6,6 @@ class StarChart extends Component {
   constructor(props) {
     super(props);
     this.state = {labels: [], data: []};
-    this.tempLabel = [];
-    this.tempData = [];
   } 
   componentDidMount() {
     this.createChart(this.props);
@@ -18,23 +16,22 @@ class StarChart extends Component {
     }
   }
   createChart = (props) => {
+    let tempLabels = [];
+    let tempData = [];
       props.repoList.map(repo =>{
         if(repo.stargazers_count > 0){
-          this.tempLabel.push(repo.name);
-          this.tempData.push(repo.stargazers_count);
+          tempLabels.push(repo.name);
+          tempData.push(repo.stargazers_count);
         }
       })
-      this.setState({labels: this.tempLabel, data: this.tempData});
-      this.tempLabel = [];
-      this.tempData = [];
 
       let promptChart = new Chart(this.refs.promptChartRef, {
         type: 'bar',
         data: {
-          labels: this.state.labels,
+          labels: tempLabels,
           datasets: [{
             label: ['Stargazer Chart', ],
-            data: this.state.data,
+            data: tempData,
             backgroundColor: [
               'rgba(101,103,217,0.6)',
             ],
