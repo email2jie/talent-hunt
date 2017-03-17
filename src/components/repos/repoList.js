@@ -1,5 +1,6 @@
 import './css/repoList.css';
 import React, { Component } from 'react';
+import { filter } from 'underscore';
 
 const RepoView = require('./repoView.js');
 
@@ -10,7 +11,7 @@ class RepoList extends Component {
     this.handleFilterChange = this.handleFilterChange.bind(this);
     this.repoList = this.props.repoList;
   }
-
+  /*
   findMatch = (repo) => {
     if(this.state.filter !== ''){
     
@@ -20,13 +21,17 @@ class RepoList extends Component {
     }else
       return true;
   }
+  */
 
   handleFilterChange(event){
     this.setState({filter: event.target.value});
-    this.repoList = this.props.repoList.filter(this.findMatch);
   }
 
   render(){
+    this.repoList = filter(this.props.repoList, this.findMatch = (repo) =>{
+        console.log(this.state.filter);
+        return ~repo.name.toLowerCase().indexOf(this.state.filter);
+    });
     return (
       <div>
 
