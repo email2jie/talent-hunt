@@ -33,33 +33,47 @@ class App extends Component {
 
   render() {
     let repoList = null;
+    let avatar = null;
+    let chart = null;
     if (this.state.repos.length > 0){
       repoList = <div>
-        <img src={this.state.owner.avatar_url} alt='avatar' />
-        <RepoList key={this.state.value} repoList={this.state.repos} />
-        <StarChart repoList={this.state.repos}/>
+        <RepoList className='pure-u-1-2' key={this.state.value} repoList={this.state.repos} />
       </div>
-      
-    }else{
-    }
-    return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Talent Hunt: Find your next super dev here!</h2>
-        </div>
-        <form onSubmit={this.onHandleSubmit}>
-          <label>
-            Search User:
-            <input type='text' value={this.state.value} onChange={this.onChange} />
-          </label>
-        </form>
 
+      avatar = <img className='pure-u-1-2' src={this.state.owner.avatar_url} alt='avatar' />
+      chart = <StarChart className='pure-u-1' repoList={this.state.repos}/>
+      }else{
+      }
+return (
+  <div className="App pure-g">
+    <div className="App-header pure-u-1">
+      <img src={logo} className="App-logo" alt="logo" />
+      <h2>Talent Hunt: Find your next super dev here!</h2>
+    </div>
+    <div className="pure-u-1-2">
+      <form className='pure-form pure-u-1' onSubmit={this.onHandleSubmit}>
+        <label for='name'>
+          <input id='name' type='text' placeholder="Github Username" value={this.state.value} onChange={this.onChange} />
+        </label>
+      </form>
+
+      {avatar}
+    </div>
+
+    <div className='pure-u-1-2'>
+
+      <div className='pure-u-1'>
         {repoList}
-
-
       </div>
-    );
+
+    </div>
+    <div className='pure-u-1'>
+      {chart}
+    </div>
+
+
+  </div>
+  );
   }
 }
 

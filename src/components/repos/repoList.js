@@ -33,11 +33,10 @@ class RepoList extends Component {
         return ~repo.name.toLowerCase().indexOf(this.state.filter);
     });
     return (
-      <div>
+      <div className='RepoList'>
 
         <label>
-          Find Repo: 
-          <input type='text' value={this.state.filter} onChange={this.handleFilterChange} />
+          <input id='name' type='text' placeholder='Filter Repo' value={this.state.filter} onChange={this.handleFilterChange} />
         </label>
         <ul>
           {
