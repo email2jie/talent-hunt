@@ -11,7 +11,7 @@ class App extends Component {
   constructor(props){
     super(props);
     this.state = {repos: [], owner: {}};
-    this.onChangeFunc('email2jie');
+    this.onChangeFunc('potato');
 
   }
 
