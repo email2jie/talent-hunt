@@ -61,6 +61,7 @@ return (
       </form>
 
       {avatar}
+      {language}
 
     </div>
 

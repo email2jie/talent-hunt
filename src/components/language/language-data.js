@@ -7,16 +7,14 @@ class LanguageData extends Component {
     this.state = {repo_language_url: [], languages: {}}
     this.totalLOC = 0;
 
-    this.tempUrl = [];
-
-
   }
   componentDidMount(){
+    let tempUrl = [];
     this.props.repoList.map( repo =>{
-      this.tempUrl.push(repo.languages_url);
+      tempUrl.push(repo.languages_url);
     })
 
-    this.setState({repo_language_url: this.tempUrl});
+    this.setState({repo_language_url: tempUrl});
 
     this.state.repo_language_url.forEach(url => {
       this.fetchData(url);
@@ -27,13 +25,14 @@ class LanguageData extends Component {
   }
 
   componentWillReceiveProps(nextProps){
+    let tempUrl = [];
     if(this.props !== nextProps){
       this.setState({repo_language_url: [], languages: {}});
 
       this.props.repoList.map( repo =>{
-        this.tempUrl.push(repo.languages_url);
+        tempUrl.push(repo.languages_url);
       })
-      this.setState({repo_language_url: this.tempUrl});
+      this.setState({repo_language_url: tempUrl});
 
       this.state.repo_language_url.forEach(url => {
         this.fetchData(url);
