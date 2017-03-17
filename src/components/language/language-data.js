@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+const _ = require('underscore');
 
 class LanguageData extends Component {
   constructor(props) {
@@ -16,18 +17,18 @@ class LanguageData extends Component {
     })
 
     this.setState({repo_language_url: this.tempUrl});
-    console.log(this.state.repo_language_url);
 
     this.state.repo_language_url.forEach(url => {
       this.fetchData(url);
     })
 
     this.calculateTotalLOC();
-  
+
   }
 
   componentWillReceiveProps(nextProps){
     if(this.props !== nextProps){
+      this.setState({repo_language_url: [], languages: {}});
 
       this.props.repoList.map( repo =>{
         this.tempUrl.push(repo.languages_url);
@@ -60,32 +61,14 @@ class LanguageData extends Component {
       })
   }
   reduceObject = (a, b) => {
-    var newObj = {};
+    const newObj = _.reduce([a, b], (memo, obj) => {
+      return _.mapObject(obj, (val, key) => {
+        return ! _.isUndefined(memo[key]) ? (memo[key] + val) : val
+      })
+    }, {})
 
-    for(var key in a){
-
-      if(!a.hasOwnProperty(key)) continue;
-
-      if(key in newObj){
-        newObj[key] += a[key];
-      }else{
-        newObj[key] = a[key];
-      }
-    }
-    for(var key in b){
-
-      if(!b.hasOwnProperty(key)) continue;
-
-      if(key in newObj){
-        newObj[key] += b[key];
-      }else{
-        newObj[key] = b[key];
-      }
-    }
 
     return newObj;
-
-
   }
 
 
@@ -95,13 +78,14 @@ class LanguageData extends Component {
       <div className='LanguageData'>
         {
         Object.keys(this.state.languages).map((key,index) => {
-        return (<div key={index}>`{key}: ${(this.state.languages[key]/this.totalLOC)*100}%`</div>)
+        var x = (this.state.languages[key] / this.totalLOC * 100).toFixed(2);
+        return (<div key={index}>{key}: {x}%</div>)
         })
         }
-        
+
       </div>
       )
-  }
+}
 
 };
 
