@@ -7,18 +7,23 @@ class LanguageData extends Component {
     this.totalLOC = 0;
 
     this.tempUrl = [];
+
+
+  }
+  componentDidMount(){
     this.props.repoList.map( repo =>{
       this.tempUrl.push(repo.languages_url);
     })
-    this.tempUrl = [];
+
+    this.setState({repo_language_url: this.tempUrl});
+    console.log(this.state.repo_language_url);
 
     this.state.repo_language_url.forEach(url => {
       this.fetchData(url);
     })
 
     this.calculateTotalLOC();
-
-
+  
   }
 
   componentWillReceiveProps(nextProps){
@@ -27,7 +32,7 @@ class LanguageData extends Component {
       this.props.repoList.map( repo =>{
         this.tempUrl.push(repo.languages_url);
       })
-      this.tempUrl = [];
+      this.setState({repo_language_url: this.tempUrl});
 
       this.state.repo_language_url.forEach(url => {
         this.fetchData(url);
@@ -86,13 +91,11 @@ class LanguageData extends Component {
 
   render(){
 
-    console.log(this.state.languages);
-    console.log(this.totalLOC);
     return (
       <div className='LanguageData'>
         {
         Object.keys(this.state.languages).map((key,index) => {
-        return (<div key={index}>key</div>)
+        return (<div key={index}>{key}</div>)
         })
         }
         
