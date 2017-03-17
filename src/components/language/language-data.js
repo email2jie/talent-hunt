@@ -95,7 +95,7 @@ class LanguageData extends Component {
       <div className='LanguageData'>
         {
         Object.keys(this.state.languages).map((key,index) => {
-        return (<div key={index}>{key}</div>)
+        return (<div key={index}>`{key}: ${(this.state.languages[key]/this.totalLOC)*100}%`</div>)
         })
         }
         
