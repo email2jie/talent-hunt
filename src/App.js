@@ -56,12 +56,11 @@ return (
     <div className="pure-u-1-2">
       <form className='pure-form pure-u-1' onSubmit={this.onHandleSubmit}>
         <label for='name'>
-          <input id='name' type='text' placeholder="Github Username" value={this.state.value} onChange={this.onChange} />
+          <input id='name' type='text' placeholder="Search Github User" value={this.state.value} onChange={this.onChange} />
         </label>
       </form>
 
       {avatar}
-      {language}
 
     </div>
 
