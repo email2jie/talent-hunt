@@ -11,20 +11,18 @@ class App extends Component {
     super(props);
     this.state = {test: 'test', value: '', repos: [], owner: {}};
 
-    this.onChange = this.onChange.bind(this);
-    this.onBlur = this.onBlur.bind(this);
   }
 
-  onChange(event){
+  onChange = (event) => {
     this.setState({value: event.target.value});
   }
 
-  onBlur(event){
+  onHandleSubmit = (event) => {
     event.preventDefault();
     this.onChangeFunc(this.state.value);
   }
 
-  onChangeFunc(user) {
+  onChangeFunc = (user) => {
     console.log(user);
     fetch(`https://api.github.com/users/${user}/repos`, {
       method: 'GET',
@@ -48,9 +46,9 @@ class App extends Component {
       <div className="App">
         <div className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
+          <h2>Talent Hunt: Find your next super dev here!</h2>
         </div>
-        <form onSubmit={this.onBlur}>
+        <form onSubmit={this.onHandleSubmit}>
           <label>
             Search User:
             <input type='text' value={this.state.value} onChange={this.onChange} />
