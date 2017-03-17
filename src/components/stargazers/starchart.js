@@ -6,6 +6,7 @@ class StarChart extends Component {
   constructor(props) {
     super(props);
     this.state = {labels: [], data: []};
+    this.chart = null;
   } 
   componentDidMount() {
     this.createChart(this.props);
@@ -15,9 +16,20 @@ class StarChart extends Component {
       this.createChart(nextProps);
     }
   }
+
+  appendHtml = (el, str) => {
+    var div = document.createElement('div');
+    div.innerHTML = str;
+    while(div.children.length > 0) {
+      el.appendChild(div.children[0]);
+    }
+  }
+
   createChart = (props) => {
     let tempLabels = [];
     let tempData = [];
+    if(this.chart !== null) this.chart.destroy();
+
       props.repoList.map(repo =>{
         if(repo.stargazers_count > 0){
           tempLabels.push(repo.name);
@@ -25,7 +37,7 @@ class StarChart extends Component {
         }
       })
 
-      let promptChart = new Chart(this.refs.promptChartRef, {
+      this.chart = new Chart(this.refs.promptChartRef, {
         type: 'bar',
         data: {
           labels: tempLabels,
@@ -58,7 +70,7 @@ class StarChart extends Component {
   render() {
     return (
       <div className="chart">
-        <div className="chartView">
+        <div id='chartView' className="chartView">
           <canvas ref="promptChartRef" id="promptChart"></canvas>
         </div>
       </div>
