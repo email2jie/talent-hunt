@@ -27,6 +27,7 @@ class StarChart extends Component {
       this.setState({labels: this.tempLabel, data: this.tempData});
       this.tempLabel = [];
       this.tempData = [];
+      console.log(this.state);
 
       let promptChart = new Chart(this.refs.promptChartRef, {
         type: 'bar',

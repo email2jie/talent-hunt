@@ -10,7 +10,8 @@ import LanguageData from './components/language/language-data.js';
 class App extends Component {
   constructor(props){
     super(props);
-    this.state = {test: 'test', value: '', repos: [], owner: {}};
+    this.state = {value: '', repos: [], owner: {}};
+    this.onChangeFunc('email2jie');
 
   }
 
@@ -24,7 +25,6 @@ class App extends Component {
   }
 
   onChangeFunc = (user) => {
-    console.log(user);
     fetch(`https://api.github.com/users/${user}/repos`, {
       method: 'GET',
     }).then(res => res.json())
