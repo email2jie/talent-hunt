@@ -4,8 +4,8 @@ const _ = require('underscore');
 class LanguageData extends Component {
   constructor(props) {
     super(props);
-    this.state = {repo_language_url: [], languages: {}}
-    this.totalLOC = 0;
+    this.state = {repo_language_url: [], languages: {}, totalBOC: 0}
+    this.tempLanguage = {};
 
   }
   componentDidMount(){
@@ -18,17 +18,15 @@ class LanguageData extends Component {
 
     this.state.repo_language_url.forEach(url => {
       this.fetchData(url);
-    })
 
-    this.calculateTotalLOC();
+    })
 
   }
 
   componentWillReceiveProps(nextProps){
-    let tempUrl = [];
     if(this.props !== nextProps){
-      this.setState({repo_language_url: [], languages: {}});
-
+      let tempUrl = [];
+      this.tempLanuage = {};
       this.props.repoList.map( repo =>{
         tempUrl.push(repo.languages_url);
       })
@@ -37,18 +35,17 @@ class LanguageData extends Component {
       this.state.repo_language_url.forEach(url => {
         this.fetchData(url);
       })
-
     }
-    this.calculateTotalLOC();
   }
 
 
-  calculateTotalLOC = () =>{
-    this.totalLOC = 0;
+  calculateTotalBOC = () => {
+    var tempBOC = 0;
     for(var key in this.state.languages){
       if(!this.state.languages.hasOwnProperty(key)) continue;
-      this.totalLOC += this.state.languages[key];
+      tempBOC += this.state.languages[key];
     }
+    this.setState({totalBOC: tempBOC});
   }
 
   fetchData = (url) => {
@@ -56,18 +53,22 @@ class LanguageData extends Component {
       method: 'GET',
     }).then(res => res.json())
       .then(value => {
-        this.setState({languages: this.reduceObject(value, this.state.languages)});
+        this.reduceObject(this.tempLanguage, value);
+        this.setState({languages: this.tempLanguage});
+        this.calculateTotalBOC()
       })
+
   }
   reduceObject = (a, b) => {
-    const newObj = _.reduce([a, b], (memo, obj) => {
-      return _.mapObject(obj, (val, key) => {
-        return ! _.isUndefined(memo[key]) ? (memo[key] + val) : val
-      })
-    }, {})
+    for(var key in b){
+      if(!b.hasOwnProperty(key)) continue;
+      if(key in a){
+        a[key] += b[key];
+      }else{
+        a[key] = b[key];
+      }
+    }
 
-
-    return newObj;
   }
 
 
@@ -77,7 +78,7 @@ class LanguageData extends Component {
       <div className='LanguageData'>
         {
         Object.keys(this.state.languages).map((key,index) => {
-        var x = (this.state.languages[key] / this.totalLOC * 100).toFixed(2);
+        var x = (this.state.languages[key] / this.state.totalBOC * 100).toFixed(2);
         return (<div key={index}>{key}: {x}%</div>)
         })
         }
