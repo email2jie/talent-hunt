@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+const Promise = require('bluebird');
 const _ = require('underscore');
 
 class LanguageData extends Component {
@@ -13,28 +14,20 @@ class LanguageData extends Component {
     this.props.repoList.map( repo =>{
       tempUrl.push(repo.languages_url);
     })
-
-    this.setState({repo_language_url: tempUrl});
-
-    this.state.repo_language_url.forEach(url => {
-      this.fetchData(url);
-
-    })
+    const responses = Promise.map(tempUrl, (url) => fetch(url), {concurrency: 5});
+    console.log(responses);
 
   }
 
   componentWillReceiveProps(nextProps){
-    if(this.props !== nextProps){
+    if(this.props.owner.id !== nextProps.owner.id){
       let tempUrl = [];
       this.tempLanuage = {};
       this.props.repoList.map( repo =>{
         tempUrl.push(repo.languages_url);
       })
-      this.setState({repo_language_url: tempUrl});
-
-      this.state.repo_language_url.forEach(url => {
-        this.fetchData(url);
-      })
+      const responses = Promise.map(tempUrl, (url) => fetch(url), {concurrency: 5});
+    console.log(responses);
     }
   }
 
@@ -48,16 +41,9 @@ class LanguageData extends Component {
     this.setState({totalBOC: tempBOC});
   }
 
-  fetchData = (url) => {
-    fetch(url, {
-      method: 'GET',
-    }).then(res => res.json())
-      .then(value => {
-        this.reduceObject(this.tempLanguage, value);
-        this.setState({languages: this.tempLanguage});
-        this.calculateTotalBOC()
-      })
-
+  handleErrors = response => {
+    if(!response.ok) throw Error(response.statusText);
+    return response;
   }
   reduceObject = (a, b) => {
     for(var key in b){

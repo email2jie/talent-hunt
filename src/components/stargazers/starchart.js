@@ -12,7 +12,7 @@ class StarChart extends Component {
     this.createChart(this.props);
   }
   componentWillReceiveProps(nextProps){
-    if(this.props !== nextProps){
+    if(this.props.owner.id !== nextProps.owner.id){
       this.createChart(nextProps);
     }
   }

@@ -11,21 +11,30 @@ class App extends Component {
   constructor(props){
     super(props);
     this.state = {repos: [], owner: {}};
-    this.onChangeFunc('potato');
+    this.onSubmitFunc('potato');
 
   }
 
   onHandleSubmit = (event) => {
     event.preventDefault();
     var input = document.getElementById('name').value;
-    this.onChangeFunc(input);
+    if(Object.keys(this.state.owner).length === 0 || this.state.owner.name !== input){
+    this.onSubmitFunc(input);
+    }
   }
 
-  onChangeFunc = (user) => {
+  onSubmitFunc = (user) => {
     fetch(`https://api.github.com/users/${user}/repos`, {
       method: 'GET',
-    }).then(res => res.json())
+    }).then(this.handleErrors)
+      .then(res => res.json())
       .then(value => this.setState({repos: value, owner: value[0].owner}))
+      .catch(error => alert(error));
+  }
+
+  handleErrors = response => {
+    if(!response.ok) throw Error(response.statusText);
+    return response;
   }
 
 
@@ -34,15 +43,23 @@ class App extends Component {
     let avatar = null;
     let chart = null;
     let language = null;
+    let error = null;
+    let owner = null;
     if (this.state.repos.length > 0){
+      console.log(this.state.owner);
+      owner = <ul className=''>
+        <li>Username: {this.state.owner.login}</li>
+        <li>User ID: {this.state.owner.id}</li>
+        <li><a href={this.state.owner.html_url}>Profile Link</a></li>
+        </ul>
+
       repoList = <div>
-        <RepoList className='pure-u-1-2' key={this.state.value} repoList={this.state.repos} />
+        <RepoList className='pure-u-1' key={this.state.value} repoList={this.state.repos} />
       </div>
 
-      avatar = <img className='pure-u-1-2' src={this.state.owner.avatar_url} alt='avatar' />
-      chart = <StarChart className='pure-u-1' repoList={this.state.repos}/>
-      language = <LanguageData repoList={this.state.repos} />
-      }else{
+      avatar = <img className='avatar' src={this.state.owner.avatar_url} alt='avatar' />
+      chart = <StarChart className='pure-u-1' repoList={this.state.repos} owner={this.state.owner}/>
+      language = <LanguageData owner={this.state.owner} repoList={this.state.repos} />
       }
 return (
   <div className="App pure-g">
@@ -51,14 +68,14 @@ return (
       <h2>Talent Hunt: Find your next super dev here!</h2>
     </div>
     <div className="pure-u-1-2">
-      <form className='pure-form pure-u-1' onSubmit={this.onHandleSubmit}>
+      <form className='pure-form' onSubmit={this.onHandleSubmit}>
         <label for='name'>
           <input id='name' type='text' placeholder="Search Github User" />
         </label>
       </form>
 
       {avatar}
-      {language}
+      {owner}
 
     </div>
 

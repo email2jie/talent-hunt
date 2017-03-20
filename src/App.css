@@ -31,3 +31,16 @@ label {
   font: 200 20px/1.5 Helvetica, Verdana, sans-serif;
   border-bottom: 1px solid #ccc;
 }
+
+.avatar {
+  margin: auto;
+  width: 248px;
+}
+
+ul {
+  list-style-type: none;
+  width: 248px;
+  margin: auto;
+  padding: 0px;
+}
+
