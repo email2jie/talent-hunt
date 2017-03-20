@@ -50,7 +50,7 @@ class App extends Component {
       owner = <ul className=''>
         <li>Username: {this.state.owner.login}</li>
         <li>User ID: {this.state.owner.id}</li>
-        <li><a href={this.state.owner.html_url}>Profile Link</a></li>
+        <li><a target="_blank" href={this.state.owner.html_url}>Profile Link</a></li>
         </ul>
 
       repoList = <div>
