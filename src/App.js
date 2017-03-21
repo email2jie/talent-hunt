@@ -68,8 +68,10 @@ class App extends Component {
 return (
   <div className="App pure-g">
     <div className="App-header pure-u-1">
+      <div className="logo-container">
       <img src={logo} className="App-logo" alt="logo" />
-      <h2>Talent Hunt: Find your next super dev here!</h2>
+      </div>
+      <h2 className='title'>Talent Hunt: Find your next super dev here!</h2>
     </div>
     <div className="pure-u-1-2">
       <form className='pure-form' onSubmit={this.onHandleSubmit}>
