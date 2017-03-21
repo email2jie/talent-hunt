@@ -6,7 +6,7 @@ const RepoView = React.createClass({
     this.repo = this.props.repo;
     return (
       <li>
-        <a href={this.repo.html_url}>
+        <a target='_blank' href={this.repo.html_url}>
           {this.repo.full_name}
         </a>
       </li>
