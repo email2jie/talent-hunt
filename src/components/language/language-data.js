@@ -36,6 +36,7 @@ class LanguageData extends Component {
         })
         this.setState({languages: result});
         this.calculateTotalBOC();
+        this.sortLanguages();
       } catch (e) {
         console.log(e);
       }
@@ -55,7 +56,6 @@ class LanguageData extends Component {
     return response;
   }
   reduceObject = (a, b) => {
-    if(Object.keys(b).length === 0) return;
     for(var key in b){
       if(!b.hasOwnProperty(key)) continue;
       if(key in a){
@@ -65,6 +65,30 @@ class LanguageData extends Component {
       }
     }
 
+  }
+
+  sortLanguages = () =>{
+    let sortable = [];
+    for(var key in this.state.languages){
+      if(!this.state.languages.hasOwnProperty(key)) continue;
+      sortable.push([key, this.state.languages[key]]);
+    }
+      sortable.sort((a,b)=>{
+        return b[1] - a[1];
+      });
+
+      if(sortable.length > 6){
+        sortable[5][0] = "Other";
+        while(sortable.length > 6){
+          var temp = sortable.pop();
+          sortable[5][1] += temp[1];
+        }
+      }
+
+      var obj = _.object(sortable);
+      this.setState({languages: obj})
+
+  
   }
 
 
