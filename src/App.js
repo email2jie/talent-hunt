@@ -73,7 +73,9 @@ return (
       </div>
       <h2 className='title'>Talent Hunt: Find your next super dev here!</h2>
     </div>
-    <div className="pure-u-1-2">
+    <div className="pure-u-1-6">
+    </div>
+    <div className="pure-u-1-3">
       <form className='pure-form' onSubmit={this.onHandleSubmit}>
         <label for='name'>
           <input id='name' type='text' placeholder="Search Github User" />
@@ -86,12 +88,15 @@ return (
 
     </div>
 
-    <div className='pure-u-1-2'>
+    <div className='pure-u-1-3'>
 
       <div className='pure-u-1'>
         {repoList}
       </div>
 
+    </div>
+
+    <div className="pure-u-1-6">
     </div>
     <div className='pure-u-1'>
       {chart}
