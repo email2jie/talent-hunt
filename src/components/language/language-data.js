@@ -14,23 +14,32 @@ class LanguageData extends Component {
     this.props.repoList.map( repo =>{
       tempUrl.push(repo.languages_url);
     })
-    const responses = Promise.map(tempUrl, (url) => fetch(url), {concurrency: 5});
-    console.log(responses);
-
+    this.fetchData(tempUrl);
   }
 
   componentWillReceiveProps(nextProps){
     if(this.props.owner.id !== nextProps.owner.id){
       let tempUrl = [];
-      this.tempLanuage = {};
-      this.props.repoList.map( repo =>{
+      nextProps.repoList.map( repo =>{
         tempUrl.push(repo.languages_url);
       })
-      const responses = Promise.map(tempUrl, (url) => fetch(url), {concurrency: 5});
-    console.log(responses);
+      this.fetchData(tempUrl);
     }
   }
 
+  async fetchData(urls) {
+      try {
+        const responses = await Promise.map(urls, (url) => fetch(url).then(res => res.json()), {concurrency: 5});
+        let result = {};
+        responses.forEach(res => {
+          this.reduceObject(result, res);
+        })
+        this.setState({languages: result});
+        this.calculateTotalBOC();
+      } catch (e) {
+        console.log(e);
+      }
+  }
 
   calculateTotalBOC = () => {
     var tempBOC = 0;
@@ -46,6 +55,7 @@ class LanguageData extends Component {
     return response;
   }
   reduceObject = (a, b) => {
+    if(Object.keys(b).length === 0) return;
     for(var key in b){
       if(!b.hasOwnProperty(key)) continue;
       if(key in a){

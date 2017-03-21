@@ -46,7 +46,6 @@ class App extends Component {
     let error = null;
     let owner = null;
     if (this.state.repos.length > 0){
-      console.log(this.state.owner);
       owner = <ul className=''>
         <li>Username: {this.state.owner.login}</li>
         <li>User ID: {this.state.owner.id}</li>
@@ -59,7 +58,12 @@ class App extends Component {
 
       avatar = <img className='avatar' src={this.state.owner.avatar_url} alt='avatar' />
       chart = <StarChart className='pure-u-1' repoList={this.state.repos} owner={this.state.owner}/>
-      language = <LanguageData owner={this.state.owner} repoList={this.state.repos} />
+      language = 
+          <div>
+            <br />
+            <h3>Languages</h3>
+          <LanguageData owner={this.state.owner} repoList={this.state.repos} />
+          </div>
       }
 return (
   <div className="App pure-g">
@@ -76,6 +80,7 @@ return (
 
       {avatar}
       {owner}
+      {language}
 
     </div>
 
