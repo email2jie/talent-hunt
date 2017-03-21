@@ -10,7 +10,7 @@ import LanguageData from './components/language/language-data.js';
 class App extends Component {
   constructor(props){
     super(props);
-    this.state = {repos: [], owner: {}};
+    this.state = {repos: [], owner: {}, error: false};
     this.onSubmitFunc('potato');
 
   }
@@ -19,7 +19,7 @@ class App extends Component {
     event.preventDefault();
     let input = document.getElementById('name').value;
     if(Object.keys(this.state.owner).length === 0 || this.state.owner.name !== input){
-    this.onSubmitFunc(input);
+      this.onSubmitFunc(input);
     }
   }
 
@@ -28,8 +28,11 @@ class App extends Component {
       method: 'GET',
     }).then(this.handleErrors)
       .then(res => res.json())
-      .then(value => this.setState({repos: value, owner: value[0].owner}))
-      .catch(error => alert(error));
+      .then(value => this.setState({error: false, repos: value, owner: value[0].owner}))
+      .catch(error => {
+        console.dir(error);
+        this.setState({error: true});
+      });
   }
 
   handleErrors = response => {
@@ -50,7 +53,7 @@ class App extends Component {
         <li>Username: {this.state.owner.login}</li>
         <li>User ID: {this.state.owner.id}</li>
         <li><a target="_blank" href={this.state.owner.html_url}>Profile Link</a></li>
-        </ul>
+      </ul>
 
       repoList = <div>
         <RepoList className='pure-u-1' key={this.state.value} repoList={this.state.repos} />
@@ -58,21 +61,25 @@ class App extends Component {
 
       avatar = <img className='avatar' src={this.state.owner.avatar_url} alt='avatar' />
       chart = <StarChart className='pure-u-1' repoList={this.state.repos} owner={this.state.owner}/>
-      language = 
-          <div>
-            <br />
-            <h3>Languages</h3>
-          <LanguageData owner={this.state.owner} repoList={this.state.repos} />
-          </div>
+      language = <div>
+        <br />
+        <h3>Languages</h3>
+        <LanguageData owner={this.state.owner} repoList={this.state.repos} />
+      </div>
       }
+      if(this.state.error){
+        error = <div>Error: User not found</div>
+      }
+
 return (
   <div className="App pure-g">
     <div className="App-header pure-u-1">
       <div className="logo-container">
-      <img src={logo} className="App-logo" alt="logo" />
+        <img src={logo} className="App-logo" alt="logo" />
       </div>
       <h2 className='title'>GiTalent: Find your next super dev.</h2>
     </div>
+    <div className="error pure-u-1">{error}</div>
     <div className="pure-u-1-6">
     </div>
     <div className="pure-u-1-3">
