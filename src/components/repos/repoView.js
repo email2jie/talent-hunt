@@ -5,11 +5,11 @@ const RepoView = React.createClass({
   render(){
     this.repo = this.props.repo;
     return (
-        <li>
-          <a href={this.repo.html_url}>
+      <li>
+        <a href={this.repo.html_url}>
           {this.repo.full_name}
-          </a>
-        </li>
+        </a>
+      </li>
       )
 }
 

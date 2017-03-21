@@ -17,14 +17,6 @@ class StarChart extends Component {
     }
   }
 
-  appendHtml = (el, str) => {
-    var div = document.createElement('div');
-    div.innerHTML = str;
-    while(div.children.length > 0) {
-      el.appendChild(div.children[0]);
-    }
-  }
-
   createChart = (props) => {
     let tempLabels = [];
     let tempData = [];
@@ -37,7 +29,6 @@ class StarChart extends Component {
                 'rgba(255, 159, 64, 0.2)'
                 ];
     let colors = [];
-    if(this.chart !== null) this.chart.destroy();
 
       props.repoList.map(repo =>{
         if(repo.stargazers_count > 0){
@@ -47,6 +38,7 @@ class StarChart extends Component {
         }
       })
 
+      if(this.chart) this.chart.destroy();
       this.chart = new Chart(this.refs.promptChartRef, {
         type: 'bar',
         data: {

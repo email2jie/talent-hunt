@@ -17,7 +17,7 @@ class App extends Component {
 
   onHandleSubmit = (event) => {
     event.preventDefault();
-    var input = document.getElementById('name').value;
+    let input = document.getElementById('name').value;
     if(Object.keys(this.state.owner).length === 0 || this.state.owner.name !== input){
     this.onSubmitFunc(input);
     }
@@ -71,7 +71,7 @@ return (
       <div className="logo-container">
       <img src={logo} className="App-logo" alt="logo" />
       </div>
-      <h2 className='title'>Talent Hunt: Find your next super dev here!</h2>
+      <h2 className='title'>GiTalent: Find your next super dev.</h2>
     </div>
     <div className="pure-u-1-6">
     </div>

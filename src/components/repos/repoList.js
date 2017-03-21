@@ -11,16 +11,6 @@ class RepoList extends Component {
     this.handleFilterChange = this.handleFilterChange.bind(this);
     this.repoList = this.props.repoList;
   }
-  /*
-  findMatch = (repo) => {
-    if(this.state.filter !== ''){
-    
-    var re = `/${this.state.filter}/ig`;
-    return repo.name.search(re) !== -1;
-    }else
-      return true;
-  }
-  */
 
   handleFilterChange(event){
     this.setState({filter: event.target.value});
@@ -32,21 +22,21 @@ class RepoList extends Component {
 
   render(){
     this.repoList = filter(this.props.repoList, this.findMatch = (repo) =>{
-        return ~repo.name.toLowerCase().indexOf(this.state.filter);
+      return ~repo.name.toLowerCase().indexOf(this.state.filter);
     });
     return (
       <div className='RepoList'>
 
-      <form className='pure-form' onSubmit={this.onHandleSubmit}>
-        <label>
-          <input id='filter' type='text' placeholder='Filter Repo' value={this.state.filter} onChange={this.handleFilterChange} />
-        </label>
-      </form>
+        <form className='pure-form' onSubmit={this.onHandleSubmit}>
+          <label>
+            <input id='filter' type='text' placeholder='Filter Repo' value={this.state.filter} onChange={this.handleFilterChange} />
+          </label>
+        </form>
         <ul>
           {
-            this.repoList.map((repo) => {
-              return (<RepoView key={repo.id} repo={repo} />)
-            })
+          this.repoList.map((repo) => {
+          return (<RepoView key={repo.id} repo={repo} />)
+          })
           }
         </ul>
       </div>
