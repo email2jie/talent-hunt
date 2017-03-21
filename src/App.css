@@ -9,6 +9,9 @@
 
 .App-header {
   background-image: url("./resources/Talent-3.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: #f36e3d;
   height: 250px;
   padding: 20px;
   color: white;
